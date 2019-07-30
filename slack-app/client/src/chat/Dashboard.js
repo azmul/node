@@ -3,13 +3,15 @@ import { Socket } from '../utils/connection';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Common from './Common';
+import CurrentUsers from './CurrentUser';
 const faker = require('faker');
 
 class Dashboard extends React.Component {
-    state = {msg: null}
+    state = {msg: null, name: faker.name.findName(), socketId: null}
     componentDidMount() {
         Socket.on('connect', () => {
-            Socket.emit('sentSocketId', {socketId: Socket.id, name: faker.name.findName()})
+            this.setState({socketId: Socket.id})
+            Socket.emit('sentSocketId', {socketId: Socket.id, name: this.state.name})
             Socket.on('messageFromServer', (data) => {
                 console.log(data);
             })
@@ -33,9 +35,15 @@ class Dashboard extends React.Component {
         })
     }
   render() {
+      const himself = {
+          name: this.state.name,
+          socketId: this.state.socketId
+      }
       return(
           <div>
-            <h1>Dashboard</h1> 
+            <h1>{this.state.name}</h1> 
+            <CurrentUsers himself= {himself} />
+            <h3>Global Message</h3>
             <form noValidate autoComplete="off">
                 <TextField
                     id="outlined-multiline-flexible"
