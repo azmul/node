@@ -61,11 +61,11 @@ class Dashboard extends React.Component {
                     </Button>
                 </div> 
             </form>
-            <div>
+            {/* <div>
                 <Button variant="contained" color="primary" onClick={this.shareLocation}>
                     Share Location
                 </Button>
-            </div> 
+            </div>  */}
             <Common />
           </div>
       )

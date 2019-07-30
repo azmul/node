@@ -1,5 +1,6 @@
 import React from 'react';
 import { Socket } from '../utils/connection';
+import TextField from '@material-ui/core/TextField';
 
 class Common extends React.Component {
     state = {recentMsg : []}
@@ -13,14 +14,22 @@ class Common extends React.Component {
   render() {
       return (
         <div>
-            <ul>
-            {this.state.recentMsg.map(message => {
+            {this.state.recentMsg.map(post => {
                 return(
-                    <li key={message.id}>{ message.message }</li> 
+                    <div key={post.id}>
+                        <h3 key={post.id}>{ post.message }</h3> 
+                        <TextField
+                            id="outlined-multiline-flexible"
+                            label="Comment"
+                            margin="normal"
+                            value={this.msg}
+                            onChange={(e) => this.setState({msg: e.target.value})}
+                            variant="outlined"
+                        />
+                    </div>
                 )
             })
             }
-            </ul>
        </div>
       )
   }
