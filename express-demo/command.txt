@@ -1,0 +1,1 @@
+Node Environment SetUp Command:  $env:NODE_ENV="development"

@@ -13,13 +13,13 @@ router.get('/', (req, res) => {
   })
   
   router.get('/:id', (req, res) => {
-      const course = courses.find( course => course.id === parseInt(req.params.id));
-      if (!course) return res.status(404).send('The course with the given id was not found');
-      res.send(course);
+    const course = courses.find( course => course.id === parseInt(req.params.id));
+    if (!course) return res.status(404).send('The course with the given id was not found');
+    res.send(course);
   })
   
   router.get('/:year/:month', (req, res) => {
-      res.send(req.params);
+    res.send(req.params);
   })
   
   // IF user give query params
@@ -28,7 +28,7 @@ router.get('/', (req, res) => {
 //       res.send(req.query);
 //   })
   
-  router.post('', (req, res) => {
+  router.post('/', (req, res) => {
       const schema = {
           name: Joi.string().alphanum().min(3).max(30).required(),
       }

@@ -18,7 +18,7 @@ app.use('/', home);
 
 if (app.get('env') === 'development') {
     app.use(morgan('tiny'));
-    debug('Mogan Enabled...');
+    console.log('Mogan Enabled...');
 }
 
 const port = process.env.port || 3000;
