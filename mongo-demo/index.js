@@ -7,7 +7,7 @@ mongoose.connect(uri,{ useNewUrlParser: true })
    .catch(err => console.log(chalk.red( err)));
 
 const courseSchema = new mongoose.Schema({
-    name: String,
+    name: {type: String, required: true},
     author: String,
     tags: [ String ],
     date: { type: Date, default: Date.now },
@@ -18,7 +18,7 @@ const Course = mongoose.model('Course', courseSchema);
 async function createCourse() {
   try {
     const course = Course({
-        name: 'Angular Course',
+        // name: 'Angular Course',
         author: 'Azmul Hossain',
         tags: ['Frontend'],
         isPublished: true
@@ -31,7 +31,7 @@ async function createCourse() {
   }
 
 }
-// createCourse();
+createCourse();
 
 async function getCourses(){
 
@@ -97,6 +97,7 @@ async function updateCourse(id){
             isPublished: false
         }
     }, {new: true})
+    
     console.log(course);
 }
 // updateCourse('5d4fd5fda696ac33e88a3b7f');
@@ -106,5 +107,5 @@ async function deleteCourse(id){
     console.log(result);
 }
 
-deleteCourse('5d4fd5fda696ac33e88a3b7f');
+// deleteCourse('5d4fd5fda696ac33e88a3b7f');
 
