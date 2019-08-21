@@ -1,16 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Joi = require('@hapi/joi');
-const mongoose = require('mongoose');
-
-const Genre = mongoose.model('Genre', new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 200
-    }
-}))
+const { Genre } = require('../models/genre');
 
   router.get('/', async (req, res) => {
     const genres = await Genre.find().sort('name');

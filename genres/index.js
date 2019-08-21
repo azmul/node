@@ -7,6 +7,10 @@ const chalk = require('chalk');
 
 const genres = require('./routes/genres');
 const home = require('./routes/home');
+const customers = require('./routes/customers');
+const movies = require('./routes/movies');
+const rentals = require('./routes/rentals');
+
 const app = express();
 
 mongoose.connect('mongodb://localhost/vidly', { useNewUrlParser: true })
@@ -19,6 +23,9 @@ app.use(express.static('public'));
 app.use(helmet());
 app.use('/api/genres',genres);
 app.use('/', home);
+app.use('/api/customers', customers);
+app.use('/api/movies', movies);
+app.use('/api/rentals', rentals);
 
 if (app.get('env') === 'development') {
     app.use(morgan('tiny'));
