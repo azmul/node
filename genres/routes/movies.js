@@ -5,8 +5,12 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const movies = await Movie.find().sort('name');
-  res.send(movies);
+  try {
+    const movies = await Movie.find().sort('name');
+    res.send(movies);
+  } catch (err){
+    res.status(500).send(err);
+  }
 });
 
 router.post('/', async (req, res) => {
@@ -16,7 +20,7 @@ router.post('/', async (req, res) => {
   const genre = await Genre.findById(req.body.genreId);
   if (!genre) return res.status(400).send('Invalid genre.');
 
-  let movie = new Movie({ 
+  const movie = new Movie({ 
     title: req.body.title,
     genre: {
       _id: genre._id,
@@ -25,9 +29,13 @@ router.post('/', async (req, res) => {
     numberInStock: req.body.numberInStock,
     dailyRentalRate: req.body.dailyRentalRate
   });
-  movie = await movie.save();
+  try {
+    await movie.save();
+    res.send(movie);
+  } catch (err){
+    res.status(500).send(err);
+  }
   
-  res.send(movie);
 });
 
 router.put('/:id', async (req, res) => {

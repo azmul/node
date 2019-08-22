@@ -1,3 +1,5 @@
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 const express = require('express');
 const router = express.Router();
 const Joi = require('@hapi/joi');
@@ -8,7 +10,7 @@ const { Genre } = require('../models/genre');
     res.send(genres);
   })
 
-  router.post('/', async (req, res) => {
+  router.post('/', auth, async (req, res) => {
       const schema = {
           name: Joi.string().alphanum().min(3).max(30).required(),
       }
@@ -32,7 +34,7 @@ const { Genre } = require('../models/genre');
     res.send(genre);
   })
   
-  router.delete('/:id', async (req, res) => {
+  router.delete('/:id', [auth, admin], async (req, res) => {
     const genre = await Genre.findByIdAndRemove(req.params.id);
     if (!genre) return res.status(404).send('The genre with the given id was not found');
 

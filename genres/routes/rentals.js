@@ -29,7 +29,8 @@ router.post('/', async (req, res) => {
     customer: {
       _id: customer._id,
       name: customer.name, 
-      phone: customer.phone
+      phone: customer.phone,
+      isGold: customer.isGold
     },
     movie: {
       _id: movie._id,
@@ -41,15 +42,19 @@ router.post('/', async (req, res) => {
   
   // movie.numberInStock--;
   // movie.save();
-
-  new Fawn.Task()
+  try {
+    new Fawn.Task()
           .save('rentals', rental)
           .update('movies', { _id: movie._id }, {
             $inc: { numberInStock: -1 }
           })
           .run();
   
-  res.send(rental);
+    res.send(rental);
+  } catch(err) {
+    res.status(500).send(err);
+  }
+ 
 });
 
 router.get('/:id', async (req, res) => {
